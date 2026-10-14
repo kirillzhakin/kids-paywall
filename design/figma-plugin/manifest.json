@@ -1,0 +1,12 @@
+{
+  "name": "chudo-ostrov-paywall",
+  "id": "chudo-ostrov-paywall-builder",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["https://fonts.googleapis.com", "https://fonts.gstatic.com"],
+    "reasoning": "Nunito is loaded from Google Fonts so type in Figma matches the implementation."
+  }
+}

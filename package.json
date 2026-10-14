@@ -1,0 +1,46 @@
+{
+  "name": "kids-paywall",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": "^22.21.0 || ^24.11.0 || >=26.0.0"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "test:api": "node scripts/test-api.mjs",
+    "test:postgres": "node scripts/test-postgres.mjs",
+    "test:figma": "node design/figma-plugin/test-plugin.mjs",
+    "shots": "node scripts/screenshots.mjs",
+    "db:recent": "sqlite3 .data/paywall.sqlite \"select created_at, device_id, offer_id, amount_minor, id from purchases order by created_at desc limit 10;\"",
+    "db:count": "sqlite3 .data/paywall.sqlite \"select count(*) as purchases from purchases;\""
+  },
+  "dependencies": {
+    "@fontsource-variable/nunito": "^5.2.8",
+    "@neondatabase/serverless": "^1.2.0",
+    "nuxt": "^4.6.1",
+    "vue": "^3.5.43",
+    "vue-router": "^5.4.0"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^12.4.1"
+  },
+  "devDependencies": {
+    "@oxc-parser/binding-darwin-arm64": "0.154.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.56.1",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
+  }
+}

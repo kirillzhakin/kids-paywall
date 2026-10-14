@@ -1,0 +1,482 @@
+{
+  "baseUrl": "http://localhost:3210",
+  "generatedAt": "2026-10-14T15:17:11.385Z",
+  "widths": {
+    "360": {
+      "viewport": {
+        "w": 360,
+        "h": 844
+      },
+      "screen": {
+        "x": 0,
+        "y": 0,
+        "w": 360,
+        "h": 844
+      },
+      "topbar": {
+        "x": 0,
+        "y": 0,
+        "w": 360,
+        "h": 48
+      },
+      "title": {
+        "x": 20,
+        "y": 118.13,
+        "w": 320,
+        "h": 27.08
+      },
+      "subtitle": {
+        "x": 20,
+        "y": 153.2,
+        "w": 320,
+        "h": 39.75
+      },
+      "unlocks": {
+        "x": 20,
+        "y": 210.95,
+        "w": 320,
+        "h": 142
+      },
+      "offersHead": {
+        "x": 20,
+        "y": 372.95,
+        "w": 320,
+        "h": 23
+      },
+      "cardFirst": {
+        "x": 20,
+        "y": 406.95,
+        "w": 320,
+        "h": 154.02
+      },
+      "cards": [
+        {
+          "w": 320,
+          "h": 154.02
+        },
+        {
+          "w": 320,
+          "h": 137.02
+        }
+      ],
+      "ctaBar": {
+        "x": 0,
+        "y": 689,
+        "w": 360,
+        "h": 155
+      },
+      "ctaButton": {
+        "x": 20,
+        "y": 702,
+        "w": 320,
+        "h": 54
+      },
+      "restoreLink": {
+        "x": 52.05,
+        "y": 766,
+        "w": 145.67,
+        "h": 32
+      },
+      "legal": {
+        "x": 20,
+        "y": 804,
+        "w": 320,
+        "h": 28
+      },
+      "type": {
+        "title": {
+          "font": "900 23.76px/27.0864px \"Nunito Variable\"",
+          "color": "rgb(30, 26, 46)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(30, 26, 46)"
+        },
+        "subtitle": {
+          "font": "600 14px/19.88px \"Nunito Variable\"",
+          "color": "rgb(74, 69, 96)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(74, 69, 96)"
+        },
+        "cardTitle": null,
+        "cardAmount": {
+          "font": "900 19px/21.85px \"Nunito Variable\"",
+          "color": "rgb(30, 26, 46)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(30, 26, 46)"
+        },
+        "cta": {
+          "font": "900 14.76px/normal \"Nunito Variable\"",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(255, 255, 255)"
+        }
+      },
+      "fontsLoaded": "loaded",
+      "horizontalOverflow": false
+    },
+    "375": {
+      "viewport": {
+        "w": 375,
+        "h": 844
+      },
+      "screen": {
+        "x": 0,
+        "y": 0,
+        "w": 375,
+        "h": 844
+      },
+      "topbar": {
+        "x": 0,
+        "y": 0,
+        "w": 375,
+        "h": 48
+      },
+      "title": {
+        "x": 20,
+        "y": 118.13,
+        "w": 335,
+        "h": 28.2
+      },
+      "subtitle": {
+        "x": 20,
+        "y": 154.33,
+        "w": 335,
+        "h": 39.75
+      },
+      "unlocks": {
+        "x": 20,
+        "y": 212.08,
+        "w": 335,
+        "h": 142
+      },
+      "offersHead": {
+        "x": 20,
+        "y": 374.08,
+        "w": 335,
+        "h": 23
+      },
+      "cardFirst": {
+        "x": 20,
+        "y": 408.08,
+        "w": 335,
+        "h": 154.02
+      },
+      "cards": [
+        {
+          "w": 335,
+          "h": 154.02
+        },
+        {
+          "w": 335,
+          "h": 137.02
+        }
+      ],
+      "ctaBar": {
+        "x": 0,
+        "y": 689,
+        "w": 375,
+        "h": 155
+      },
+      "ctaButton": {
+        "x": 20,
+        "y": 702,
+        "w": 335,
+        "h": 54
+      },
+      "restoreLink": {
+        "x": 59.55,
+        "y": 766,
+        "w": 145.67,
+        "h": 32
+      },
+      "legal": {
+        "x": 20,
+        "y": 804,
+        "w": 335,
+        "h": 28
+      },
+      "type": {
+        "title": {
+          "font": "900 24.75px/28.215px \"Nunito Variable\"",
+          "color": "rgb(30, 26, 46)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(30, 26, 46)"
+        },
+        "subtitle": {
+          "font": "600 14px/19.88px \"Nunito Variable\"",
+          "color": "rgb(74, 69, 96)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(74, 69, 96)"
+        },
+        "cardTitle": null,
+        "cardAmount": {
+          "font": "900 19px/21.85px \"Nunito Variable\"",
+          "color": "rgb(30, 26, 46)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(30, 26, 46)"
+        },
+        "cta": {
+          "font": "900 15.375px/normal \"Nunito Variable\"",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(255, 255, 255)"
+        }
+      },
+      "fontsLoaded": "loaded",
+      "horizontalOverflow": false
+    },
+    "390": {
+      "viewport": {
+        "w": 390,
+        "h": 844
+      },
+      "screen": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 844
+      },
+      "topbar": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 48
+      },
+      "title": {
+        "x": 20,
+        "y": 118.13,
+        "w": 350,
+        "h": 29.33
+      },
+      "subtitle": {
+        "x": 20,
+        "y": 155.45,
+        "w": 350,
+        "h": 39.75
+      },
+      "unlocks": {
+        "x": 20,
+        "y": 213.2,
+        "w": 350,
+        "h": 142
+      },
+      "offersHead": {
+        "x": 20,
+        "y": 375.2,
+        "w": 350,
+        "h": 23
+      },
+      "cardFirst": {
+        "x": 20,
+        "y": 409.2,
+        "w": 350,
+        "h": 154.02
+      },
+      "cards": [
+        {
+          "w": 350,
+          "h": 154.02
+        },
+        {
+          "w": 350,
+          "h": 137.02
+        }
+      ],
+      "ctaBar": {
+        "x": 0,
+        "y": 689,
+        "w": 390,
+        "h": 155
+      },
+      "ctaButton": {
+        "x": 20,
+        "y": 702,
+        "w": 350,
+        "h": 54
+      },
+      "restoreLink": {
+        "x": 67.05,
+        "y": 766,
+        "w": 145.67,
+        "h": 32
+      },
+      "legal": {
+        "x": 20,
+        "y": 804,
+        "w": 350,
+        "h": 28
+      },
+      "type": {
+        "title": {
+          "font": "900 25.74px/29.3436px \"Nunito Variable\"",
+          "color": "rgb(30, 26, 46)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(30, 26, 46)"
+        },
+        "subtitle": {
+          "font": "600 14px/19.88px \"Nunito Variable\"",
+          "color": "rgb(74, 69, 96)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(74, 69, 96)"
+        },
+        "cardTitle": null,
+        "cardAmount": {
+          "font": "900 19px/21.85px \"Nunito Variable\"",
+          "color": "rgb(30, 26, 46)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(30, 26, 46)"
+        },
+        "cta": {
+          "font": "900 15.99px/normal \"Nunito Variable\"",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(255, 255, 255)"
+        }
+      },
+      "fontsLoaded": "loaded",
+      "horizontalOverflow": false
+    },
+    "430": {
+      "viewport": {
+        "w": 430,
+        "h": 844
+      },
+      "screen": {
+        "x": 0,
+        "y": 0,
+        "w": 430,
+        "h": 844
+      },
+      "topbar": {
+        "x": 0,
+        "y": 0,
+        "w": 430,
+        "h": 48
+      },
+      "title": {
+        "x": 20,
+        "y": 118.13,
+        "w": 390,
+        "h": 30.77
+      },
+      "subtitle": {
+        "x": 20,
+        "y": 156.89,
+        "w": 390,
+        "h": 39.75
+      },
+      "unlocks": {
+        "x": 20,
+        "y": 214.64,
+        "w": 390,
+        "h": 142
+      },
+      "offersHead": {
+        "x": 20,
+        "y": 376.64,
+        "w": 390,
+        "h": 23
+      },
+      "cardFirst": {
+        "x": 20,
+        "y": 410.64,
+        "w": 390,
+        "h": 154.02
+      },
+      "cards": [
+        {
+          "w": 390,
+          "h": 154.02
+        },
+        {
+          "w": 390,
+          "h": 137.02
+        }
+      ],
+      "ctaBar": {
+        "x": 0,
+        "y": 689,
+        "w": 430,
+        "h": 155
+      },
+      "ctaButton": {
+        "x": 20,
+        "y": 702,
+        "w": 390,
+        "h": 54
+      },
+      "restoreLink": {
+        "x": 87.05,
+        "y": 766,
+        "w": 145.67,
+        "h": 32
+      },
+      "legal": {
+        "x": 20,
+        "y": 804,
+        "w": 390,
+        "h": 28
+      },
+      "type": {
+        "title": {
+          "font": "900 27px/30.78px \"Nunito Variable\"",
+          "color": "rgb(30, 26, 46)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(30, 26, 46)"
+        },
+        "subtitle": {
+          "font": "600 14px/19.88px \"Nunito Variable\"",
+          "color": "rgb(74, 69, 96)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(74, 69, 96)"
+        },
+        "cardTitle": null,
+        "cardAmount": {
+          "font": "900 19px/21.85px \"Nunito Variable\"",
+          "color": "rgb(30, 26, 46)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(30, 26, 46)"
+        },
+        "cta": {
+          "font": "900 16px/normal \"Nunito Variable\"",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "radius": "0px",
+          "padding": "0px",
+          "border": "0px rgb(255, 255, 255)"
+        }
+      },
+      "fontsLoaded": "loaded",
+      "horizontalOverflow": false
+    }
+  }
+}
