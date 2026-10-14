@@ -1,0 +1,158 @@
+{
+  "base": "https://kids-paywall-one.vercel.app",
+  "widths": {
+    "360": {
+      "topbar": {
+        "x": 0,
+        "y": 0,
+        "w": 360,
+        "h": 48
+      },
+      "title": {
+        "x": 20,
+        "y": 118.13,
+        "w": 320,
+        "h": 27.08
+      },
+      "cardFirst": {
+        "x": 20,
+        "y": 406.95,
+        "w": 320,
+        "h": 154.02
+      },
+      "cards": [
+        154.02,
+        137.02
+      ],
+      "ctaButton": {
+        "x": 20,
+        "y": 702,
+        "w": 320,
+        "h": 54
+      },
+      "restoreLink": {
+        "x": 52.05,
+        "y": 766,
+        "w": 145.67,
+        "h": 32
+      },
+      "titleFont": "\"Nunito Variable\"",
+      "fontsLoaded": "loaded",
+      "horizontalOverflow": false
+    },
+    "390": {
+      "topbar": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 48
+      },
+      "title": {
+        "x": 20,
+        "y": 118.13,
+        "w": 350,
+        "h": 29.33
+      },
+      "cardFirst": {
+        "x": 20,
+        "y": 409.2,
+        "w": 350,
+        "h": 154.02
+      },
+      "cards": [
+        154.02,
+        137.02
+      ],
+      "ctaButton": {
+        "x": 20,
+        "y": 702,
+        "w": 350,
+        "h": 54
+      },
+      "restoreLink": {
+        "x": 67.05,
+        "y": 766,
+        "w": 145.67,
+        "h": 32
+      },
+      "titleFont": "\"Nunito Variable\"",
+      "fontsLoaded": "loaded",
+      "horizontalOverflow": false
+    },
+    "430": {
+      "topbar": {
+        "x": 0,
+        "y": 0,
+        "w": 430,
+        "h": 48
+      },
+      "title": {
+        "x": 20,
+        "y": 118.13,
+        "w": 390,
+        "h": 30.77
+      },
+      "cardFirst": {
+        "x": 20,
+        "y": 410.64,
+        "w": 390,
+        "h": 154.02
+      },
+      "cards": [
+        154.02,
+        137.02
+      ],
+      "ctaButton": {
+        "x": 20,
+        "y": 702,
+        "w": 390,
+        "h": 54
+      },
+      "restoreLink": {
+        "x": 87.05,
+        "y": 766,
+        "w": 145.67,
+        "h": 32
+      },
+      "titleFont": "\"Nunito Variable\"",
+      "fontsLoaded": "loaded",
+      "horizontalOverflow": false
+    }
+  },
+  "api": {},
+  "purchaseOk": true,
+  "sheetRows": 1,
+  "restoreToast": "✓\nПокупки восстановлены",
+  "deltas390": {
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "title": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "cardFirst": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "ctaButton": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "restoreLink": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  }
+}
