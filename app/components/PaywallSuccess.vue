@@ -63,18 +63,14 @@ const confetti = [
         <dd>{{ props.details.purchasedAtLabel }}</dd>
       </div>
       <div class="success__row">
-        <dt>Покупка</dt>
+        <dt>Номер покупки</dt>
         <dd class="success__mono">{{ props.details.purchaseId }}</dd>
-      </div>
-      <div class="success__row">
-        <dt>Устройство</dt>
-        <dd class="success__mono">{{ props.details.deviceId }}</dd>
       </div>
     </dl>
 
     <p class="success__stored">
-      <span aria-hidden="true">🗄️</span>
-      Запись сохранена в базе данных
+      <span aria-hidden="true">🎮</span>
+      Доступ привязан к этому устройству
     </p>
   </section>
 </template>

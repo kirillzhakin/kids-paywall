@@ -14,7 +14,6 @@ export interface SuccessDetails {
   amountLabel: string
   purchasedAtLabel: string
   purchaseId: string
-  deviceId: string
   offerId: string
 }
 
@@ -86,13 +85,11 @@ export function usePaywall() {
       amountLabel: formatMoney(purchase.amountMinor, purchase.currency),
       purchasedAtLabel: formatDateTime(purchase.createdAt),
       purchaseId: purchase.id,
-      deviceId: purchase.deviceId,
       offerId: purchase.offerId,
     }
   })
 
-  function showToast(text: string, tone: 'ok' | 'error' = 'ok') {
-    toast.value = { text, tone }
+  function showToast(text: string, tone: 'ok' | 'error' = 'ok') {    toast.value = { text, tone }
     if (import.meta.client) {
       window.setTimeout(() => {
         if (toast.value?.text === text) toast.value = null
@@ -178,12 +175,16 @@ export function usePaywall() {
         method: 'POST',
         body: { deviceId: getDeviceId() },
       })
+      // Remember the state before the lookup: a second tap on «Восстановить
+      // покупки» should not look like a fresh restore.
+      const wasActive = entitlement.value.active
+
       entitlement.value = data.entitlement
       if (data.entitlement.active && data.purchases[0]) {
         lastPurchase.value = data.purchases[0]
-        showToast('Покупки восстановлены', 'ok')
+        showToast(wasActive ? 'Полный доступ уже активен' : 'Покупки восстановлены', 'ok')
       } else {
-        showToast('Активных покупок не найдено', 'error')
+        showToast('Покупок на этом устройстве не найдено', 'ok')
       }
     } catch {
       showToast('Не удалось проверить покупки', 'error')
@@ -215,6 +216,5 @@ export function usePaywall() {
     purchase,
     restore,
     closeSuccess,
-    showToast,
   }
 }

@@ -42,7 +42,7 @@ const totalLabel = computed(() => {
         <span class="sheet__handle" aria-hidden="true" />
 
         <div class="sheet__head">
-          <h2 class="sheet__title">Мои покупки</h2>
+          <h3 class="sheet__title">Мои покупки</h3>
           <button class="sheet__close" type="button" aria-label="Закрыть" @click="close">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path
@@ -56,8 +56,7 @@ const totalLabel = computed(() => {
         </div>
 
         <p class="sheet__subtitle">
-          Строки из таблицы <code>purchases</code> — их вернул
-          <code>GET /api/purchases</code>.
+          Здесь собраны покупки, сделанные на этом устройстве.
         </p>
 
         <div v-if="loading" class="sheet__loading">
@@ -66,7 +65,8 @@ const totalLabel = computed(() => {
         </div>
 
         <p v-else-if="!items.length" class="sheet__empty">
-          Покупок пока нет. Оформите тестовую покупку — запись появится здесь.
+          Покупок пока нет. Как только оформите полный доступ, он появится здесь — и его
+          можно будет восстановить на этом устройстве.
         </p>
 
         <ul v-else class="sheet__list">
@@ -151,17 +151,10 @@ const totalLabel = computed(() => {
 
 .sheet__subtitle {
   margin-top: 4px;
-  font-size: 11.5px;
-  line-height: 1.4;
+  font-size: 12px;
+  line-height: 1.45;
   font-weight: 600;
   color: var(--c-muted);
-}
-
-.sheet__subtitle code {
-  padding: 1px 4px;
-  border-radius: 5px;
-  background: var(--c-surface-soft);
-  font-size: 10.5px;
 }
 
 .sheet__loading {
@@ -249,9 +242,7 @@ const totalLabel = computed(() => {
   font-weight: 700;
   color: var(--c-muted);
   text-align: center;
-}
-
-.sheet-enter-active,
+}.sheet-enter-active,
 .sheet-leave-active {
   transition: opacity 0.2s ease;
 }
