@@ -166,7 +166,10 @@ curl -s "https://<домен>/api/purchases?deviceId=dev_check_001"
   переносы заголовка на 360 px.
 * `pnpm build` в прод-режиме + `NITRO_PRESET=vercel`: SSR и server routes
   работают, в `.vercel/output/functions/api` лежат отдельные функции.
-* Figma-плагин — `pnpm test:figma` (мок Plugin API): 337 слоёв, 127 текстовых.
+* Figma-плагин — `pnpm test:figma` (мок Plugin API + модель auto-layout):
+  4 фрейма 390 × 844, 333 слоя на запуск, повторный запуск не оставляет дублей.
+  Три реальных бага плагина (плашка поверх контента, «схлопнутая» высота фрейма,
+  оставшиеся вложенные слои) нашлись именно этим тестом.
 
 **Границы честности:** живые ссылки на Figma, Vercel и GitHub требуют аккаунтов —
 их создаёте вы (шаги в [DEPLOY.md](./DEPLOY.md) и `design/README.md`).

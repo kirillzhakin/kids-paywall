@@ -83,14 +83,67 @@ function solid(color, opacity = 1) {
   return [{ type: 'SOLID', color, opacity }]
 }
 
+/**
+ * Soft lavender wash at the top of the screen, as a fill on the frame itself.
+ *
+ * It must NOT be a separate absolutely-positioned layer: inside an auto-layout
+ * frame such a layer is painted above the content and hides the whole design.
+ *
+ * Vertical top → bottom gradient, matching the CSS in the implementation:
+ *   radial-gradient(120% 46% at 50% 0%, #EFE7FF 0%, transparent 62%),
+ *   linear-gradient(180deg, #F7F4FF 0%, #FDFBFF 42%, #FFFFFF 100%)
+ */
+function screenFills() {
+  return [
+    {
+      type: 'GRADIENT_LINEAR',
+      gradientTransform: [
+        [0, 1, 0],
+        [-1, 0, 1],
+      ],
+      gradientStops: [
+        { position: 0, color: { ...C.gradientTop, a: 1 } },
+        { position: 0.42, color: { r: 0.992, g: 0.984, b: 1, a: 1 } }, // #FDFBFF
+        { position: 1, color: { r: 1, g: 1, b: 1, a: 1 } },
+      ],
+      opacity: 1,
+      visible: true,
+      blendMode: 'NORMAL',
+    },
+    {
+      type: 'GRADIENT_RADIAL',
+      // circle centred on the top edge, fading out by ~62% of the height
+      gradientTransform: [
+        [1.2, 0, -0.1],
+        [0, 2.15, -0.075],
+      ],
+      gradientStops: [
+        { position: 0, color: { ...C.gradientTop, a: 1 } },
+        { position: 1, color: { ...C.gradientTop, a: 0 } },
+      ],
+      opacity: 1,
+      visible: true,
+      blendMode: 'NORMAL',
+    },
+  ]
+}
+
 function frame(name, options = {}) {
   const node = figma.createFrame()
   node.name = name
   node.fills = options.fills ?? []
   node.clipsContent = options.clipsContent ?? false
   node.layoutMode = options.mode ?? 'VERTICAL'
-  node.primaryAxisSizingMode = options.primary ?? 'AUTO'
-  node.counterAxisSizingMode = options.counter ?? 'FIXED'
+
+  const fixedWidth = options.width !== undefined
+  const fixedHeight = options.height !== undefined
+
+  // A fixed size only sticks when the matching sizing mode is FIXED as well:
+  // with AUTO the plugin API recomputes the axis from the children, which
+  // silently turns a 390x844 screen into a content-sized frame.
+  node.primaryAxisSizingMode = options.primary ?? (fixedHeight ? 'FIXED' : 'AUTO')
+  node.counterAxisSizingMode = options.counter ?? (fixedWidth ? 'FIXED' : 'AUTO')
+
   node.itemSpacing = options.gap ?? 0
   if (options.padding !== undefined) {
     const p = options.padding
@@ -101,7 +154,14 @@ function frame(name, options = {}) {
   }
   if (options.align) node.counterAxisAlignItems = options.align
   if (options.justify) node.primaryAxisAlignItems = options.justify
-  if (options.width) node.resize(options.width, options.height ?? 100)
+
+  // Pass only the axes that were really requested. Supplying `undefined` for
+  // the other axis would keep Figma's default 100px instead of letting the
+  // AUTO sizing mode compute it from the children.
+  if (fixedWidth && fixedHeight) node.resize(options.width, options.height)
+  else if (fixedWidth) node.resize(options.width)
+  else if (fixedHeight) node.resize(node.width, options.height)
+
   if (options.radius !== undefined) node.cornerRadius = options.radius
   if (options.stroke) {
     node.strokes = solid(options.stroke.color)
@@ -545,22 +605,11 @@ async function buildMainScreen(x, y, label) {
   const frameNode = col('Paywall / 390x844 — основной', {
     width: 390,
     height: 844,
-    fills: solid(C.surface),
+    fills: screenFills(),
     clipsContent: true,
   })
   frameNode.x = x
   frameNode.y = y
-
-  // soft lavender wash behind the header, like the implementation
-  const wash = rect('top-wash', {
-    width: 390,
-    height: 300,
-    fills: solid(C.gradientTop),
-    mode: 'NONE',
-  })
-  wash.x = 0
-  wash.y = 0
-  wash.layoutPositioning = 'ABSOLUTE'
 
   const content = col('content', {
     width: 390,
@@ -610,7 +659,6 @@ async function buildMainScreen(x, y, label) {
     }),
   )
 
-  frameNode.appendChild(wash)
   frameNode.appendChild(buildStatusBar())
   frameNode.appendChild(buildTopBar())
   frameNode.appendChild(content)
@@ -625,16 +673,11 @@ async function buildStateScreen(x, y, label, variant) {
   const frameNode = col(`Paywall / 390x844 — ${variant}`, {
     width: 390,
     height: 844,
-    fills: solid(C.surface),
+    fills: screenFills(),
     clipsContent: true,
   })
   frameNode.x = x
   frameNode.y = y
-
-  const wash = rect('top-wash', { width: 390, height: 300, fills: solid(C.gradientTop), mode: 'NONE' })
-  wash.x = 0
-  wash.y = 0
-  wash.layoutPositioning = 'ABSOLUTE'
 
   const content = col('content', {
     width: 390,
@@ -814,7 +857,6 @@ async function buildStateScreen(x, y, label, variant) {
     content.appendChild(success)
   }
 
-  frameNode.appendChild(wash)
   frameNode.appendChild(buildStatusBar())
   frameNode.appendChild(buildTopBar())
   frameNode.appendChild(content)
@@ -889,10 +931,25 @@ function buildTokensSection(x, y) {
 /* main                                                                */
 /* ------------------------------------------------------------------ */
 
+/** Marks everything this plugin creates, so a re-run can clean up first. */
+const MARKER_KEY = 'chudoOstrovPaywall'
+const MARKER_VALUE = 'v1'
+
+async function removePreviousRun(page) {
+  const previous = page.findAll(
+    node => node.getPluginData && node.getPluginData(MARKER_KEY) === MARKER_VALUE,
+  )
+  for (const node of previous) {
+    if (node.removed !== true) node.remove()
+  }
+  return previous.length
+}
+
 async function main() {
   const family = await loadFonts()
 
   const page = figma.currentPage
+  const removed = await removePreviousRun(page)
   const nodes = []
 
   const main = await buildMainScreen(0, 60, 'Paywall / основной экран')
@@ -909,7 +966,8 @@ async function main() {
 
   nodes.push(buildTokensSection(0, 950))
 
-  const cover = text('Чудо-Остров · Paywall · 390 × 844 · Nunito', {    size: 16,
+  const cover = text('Чудо-Остров · Paywall · 390 × 844 · Nunito', {
+    size: 16,
     font: extraBold,
     color: C.ink,
     name: 'cover-title',
@@ -918,10 +976,17 @@ async function main() {
   cover.y = 16
   nodes.push(cover)
 
-  for (const node of nodes) page.appendChild(node)
+  for (const node of nodes) {
+    page.appendChild(node)
+    if (node.setPluginData) node.setPluginData(MARKER_KEY, MARKER_VALUE)
+  }
 
-  figma.viewport.scrollAndZoomIntoView(nodes.filter((node) => node.type !== 'TEXT' || node.name !== 'cover-title'))
-  figma.notify(`Готово: экран собран (шрифт ${family})`)
+  figma.viewport.scrollAndZoomIntoView(
+    nodes.filter(node => node.type !== 'TEXT' || node.name !== 'cover-title'),
+  )
+
+  const suffix = removed ? ` (удалён предыдущий прогон: ${removed})` : ''
+  figma.notify(`Готово: экран собран, шрифт ${family}${suffix}`)
   figma.closePlugin()
 }
 
