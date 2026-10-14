@@ -3,6 +3,8 @@
 Экран paywall для условной детской игры: два тарифа, выбор, тестовая покупка,
 сохранение в БД и понятные состояния загрузки / ошибки / успеха.
 
+**Репозиторий:** https://github.com/kirillzhakin/kids-paywall
+
 **Стек:** Nuxt 4 (SSR) + TypeScript · frontend и backend в одном проекте ·
 SQLite локально / Postgres (Neon) в продакшене · деплой на Vercel.
 
