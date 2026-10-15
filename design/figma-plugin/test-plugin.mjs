@@ -23,13 +23,30 @@ const notifications = []
 let nodeCount = 0
 let problemsDetected = false
 
-const loadableFonts = new Set([
-  'Nunito/Regular',
-  'Nunito/SemiBold',
-  'Nunito/Bold',
-  'Nunito/ExtraBold',
-  'Nunito/Black',
-])
+/**
+ * Fonts the fake Figma "has installed". Deliberately incomplete: Nunito exists
+ * but without a Black style, so the resolver has to fall back instead of
+ * aborting the run. Inter/Roboto are fully available as a safety net.
+ */
+const INSTALLED_FONTS = [
+  { family: 'Nunito', style: 'Regular' },
+  { family: 'Nunito', style: 'SemiBold' },
+  { family: 'Nunito', style: 'Bold' },
+  { family: 'Nunito', style: 'ExtraBold' },
+  { family: 'Inter', style: 'Regular' },
+  { family: 'Inter', style: 'Semi Bold' },
+  { family: 'Inter', style: 'Bold' },
+  { family: 'Inter', style: 'Extra Bold' },
+  { family: 'Inter', style: 'Black' },
+  { family: 'Roboto', style: 'Regular' },
+  { family: 'Roboto', style: 'Medium' },
+  { family: 'Roboto', style: 'Bold' },
+]
+
+const fontKey = font => `${font.family}/${font.style}`
+const installedKeys = new Set(INSTALLED_FONTS.map(fontKey))
+
+const requestedFonts = []
 
 function makeNode(type) {
   nodeCount += 1
@@ -123,10 +140,13 @@ const figma = {
     return node
   },
   loadFontAsync: async (font) => {
-    const key = `${font.family}/${font.style}`
-    if (!loadableFonts.has(key)) throw new Error(`Font unavailable: ${key}`)
+    requestedFonts.push(fontKey(font))
+    if (!installedKeys.has(fontKey(font))) throw new Error(`Font unavailable: ${fontKey(font)}`)
     return font
   },
+  listAvailableFontsAsync: async () => INSTALLED_FONTS.map(fontName => ({ fontName })),
+  getAvailableFonts: () => INSTALLED_FONTS.map(fontName => ({ fontName })),
+  loadAllFonts: async () => {},
   notify: (message) => notifications.push(message),
   closePlugin: () => {},
   currentPage: {
@@ -405,7 +425,25 @@ if (strayWashes.length) {
 console.log(`\nnodes per run : ${firstRunNodes.length} (${textNodes.length} text)`)
 console.log(`запусков      : ${runNumber}`)
 console.log(`слоёв на странице: ${nodesOnPageAfterFirstRun} → ${nodesOnPageAfterSecondRun} (повторный запуск)`)
-console.log(`notification  : ${notifications.join(' | ') || '—'}`)
+console.log(`шрифт         : ${notifications.join(' | ') || '—'}`)
+
+// Font resilience: Nunito has no Black style in the fake font list, so the
+// plugin must still build every screen instead of aborting.
+const fontFamiliesUsed = new Set(
+  textNodes.map(node => (node.fontName && node.fontName.family) || '').filter(Boolean),
+)
+console.log(`семейства в тексте: ${[...fontFamiliesUsed].join(', ') || '—'}`)
+if (!fontFamiliesUsed.has('Nunito')) {
+  problems.push(
+    `text layers did not use Nunito (got: ${[...fontFamiliesUsed].join(', ') || 'none'})`,
+  )
+}
+if (requestedFonts.length === 0) {
+  problems.push('the plugin never requested a font')
+}
+const missingStyles = requestedFonts.filter(key => !installedKeys.has(key))
+console.log(`запрошено шрифтов : ${requestedFonts.length}, из них отсутствовало: ${missingStyles.length}`)
+for (const key of new Set(missingStyles)) console.log(`   · ${key} → ушёл в фолбэк`)
 
 if (problems.length || problemsDetected) {
   console.error('\nFAILED:\n- ' + problems.join('\n- '))

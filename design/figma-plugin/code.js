@@ -45,38 +45,133 @@ let fontFamily = FONT
 /* helpers                                                             */
 /* ------------------------------------------------------------------ */
 
-async function loadFonts() {
-  const candidates = [
-    { family: 'Nunito', regular: 'Regular', semibold: 'SemiBold', bold: 'Bold', extraBold: 'ExtraBold', black: 'Black' },
-    { family: 'Inter', regular: 'Regular', semibold: 'Semi Bold', bold: 'Bold', extraBold: 'Extra Bold', black: 'Black' },
-    { family: 'Roboto', regular: 'Regular', semibold: 'Medium', bold: 'Bold', extraBold: 'Black', black: 'Black' },
-  ]
+/* ------------------------------------------------------------------ */
+/* fonts — resolved defensively, so one unavailable style cannot abort  */
+/* the whole run                                                        */
+/* ------------------------------------------------------------------ */
 
-  for (const candidate of candidates) {
-    try {
-      const [r, s, b, eb, bl] = await Promise.all([
-        figma.loadFontAsync({ family: candidate.family, style: candidate.regular }),
-        figma.loadFontAsync({ family: candidate.family, style: candidate.semibold }),
-        figma.loadFontAsync({ family: candidate.family, style: candidate.bold }),
-        figma.loadFontAsync({ family: candidate.family, style: candidate.extraBold }),
-        figma.loadFontAsync({ family: candidate.family, style: candidate.black }),
-      ])
-      regular = r
-      semibold = s
-      bold = b
-      extraBold = eb
-      black = bl
-      fontFamily = candidate.family
-      return candidate.family
-    } catch {
-      /* try the next family */
+const FONT_CACHE = new Map()
+const AVAILABLE_FAMILIES = new Map()
+
+/** Style names used by each role, most wanted first. */
+const FONT_STYLES = {
+  regular: ['Regular', 'Book', 'Normal', 'Light'],
+  semibold: ['SemiBold', 'Semi Bold', 'DemiBold', 'Medium'],
+  bold: ['Bold', 'SemiBold', 'Semi Bold', 'Medium'],
+  extraBold: ['ExtraBold', 'Extra Bold', 'Bold', 'SemiBold Bold', 'SemiBold'],
+  black: ['Black', 'Heavy', 'ExtraBold', 'Extra Bold', 'Bold'],
+}
+
+const FONT_ROLES = Object.keys(FONT_STYLES)
+const DEFAULTS = {
+  regular: { family: 'Roboto', style: 'Regular' },
+  semibold: { family: 'Roboto', style: 'Medium' },
+  bold: { family: 'Roboto', style: 'Bold' },
+  extraBold: { family: 'Roboto', style: 'Bold' },
+  black: { family: 'Roboto', style: 'Bold' },
+}
+
+function stylesForFamily(family) {
+  if (AVAILABLE_FAMILIES.has(family)) return AVAILABLE_FAMILIES.get(family)
+  let styles = []
+  try {
+    styles = figma.listAvailableFontsAsync
+      ? null // async, handled by warmFamilies()
+      : (figma.getAvailableFonts ? figma.getAvailableFonts() : [])
+        .filter(font => font.fontName.family === family)
+        .map(font => font.fontName.style)
+  } catch {
+    styles = []
+  }
+  const set = new Set(styles || [])
+  AVAILABLE_FAMILIES.set(family, set)
+  return set
+}
+
+async function warmFamilies(families) {
+  if (!figma.listAvailableFontsAsync) return
+  try {
+    const list = await figma.listAvailableFontsAsync()
+    for (const family of families) {
+      AVAILABLE_FAMILIES.set(
+        family,
+        new Set(
+          list
+            .filter(item => item.fontName && item.fontName.family === family)
+            .map(item => item.fontName.style),
+        ),
+      )
+    }
+  } catch {
+    /* keep whatever we have */
+  }
+}
+
+async function tryLoad(fontName) {
+  const key = `${fontName.family}/${fontName.style}`
+  if (FONT_CACHE.has(key)) return FONT_CACHE.get(key)
+  try {
+    await figma.loadFontAsync(fontName)
+    FONT_CACHE.set(key, fontName)
+    return fontName
+  } catch {
+    FONT_CACHE.set(key, null)
+    return null
+  }
+}
+
+/** Resolves one role for one family, or null if that family has no such style. */
+async function resolveRole(family, role) {
+  const available = stylesForFamily(family)
+  for (const style of FONT_STYLES[role]) {
+    if (available && available.size && !available.has(style)) continue
+    const loaded = await tryLoad({ family, style })
+    if (loaded) return loaded
+  }
+  return null
+}
+
+/**
+ * Prepares Nunito (or the best available fallback) for every role.
+ * Never throws: if a style is missing we fall back to another style or family,
+ * because a font problem must not prevent the screen from being drawn.
+ */
+async function loadFonts() {
+  const families = ['Nunito', 'Inter', 'Roboto', 'Helvetica Neue', 'Arial']
+  await warmFamilies(families)
+
+  const resolved = {}
+  let chosen = null
+
+  for (const family of families) {
+    const candidate = {}
+    for (const role of FONT_ROLES) candidate[role] = await resolveRole(family, role)
+    const complete = FONT_ROLES.every(role => candidate[role])
+    const partial = FONT_ROLES.some(role => candidate[role])
+    if (complete) {
+      Object.assign(resolved, candidate)
+      chosen = family
+      break
+    }
+    if (partial && !chosen) {
+      Object.assign(resolved, candidate)
+      chosen = family
     }
   }
 
-  // Last resort: whatever the default font is.
-  regular = { family: 'Inter', style: 'Regular' }
-  fontFamily = 'Inter'
-  return 'Inter'
+  for (const role of FONT_ROLES) {
+    if (!resolved[role]) {
+      resolved[role] = (await tryLoad(DEFAULTS[role])) || DEFAULTS[role]
+    }
+  }
+
+  regular = resolved.regular
+  semibold = resolved.semibold
+  bold = resolved.bold
+  extraBold = resolved.extraBold
+  black = resolved.black
+  fontFamily = chosen || regular.family
+  return fontFamily
 }
 
 function solid(color, opacity = 1) {
@@ -936,57 +1031,171 @@ const MARKER_KEY = 'chudoOstrovPaywall'
 const MARKER_VALUE = 'v1'
 
 async function removePreviousRun(page) {
-  const previous = page.findAll(
-    node => node.getPluginData && node.getPluginData(MARKER_KEY) === MARKER_VALUE,
-  )
-  for (const node of previous) {
-    if (node.removed !== true) node.remove()
+  let previous = []
+  try {
+    if (typeof page.findAll === 'function') {
+      previous = page.findAll(
+        node => node.getPluginData && node.getPluginData(MARKER_KEY) === MARKER_VALUE,
+      )
+    }
+  } catch (error) {
+    console.warn('[paywall] cleanup skipped:', error.message)
+    return 0
   }
-  return previous.length
+
+  let removed = 0
+  for (const node of previous) {
+    try {
+      if (node.removed !== true) {
+        node.remove()
+        removed += 1
+      }
+    } catch {
+      /* ignore a single failed removal */
+    }
+  }
+  return removed
 }
 
 async function main() {
-  const family = await loadFonts()
-
   const page = figma.currentPage
-  const removed = await removePreviousRun(page)
-  const nodes = []
+  const failures = []
 
-  const main = await buildMainScreen(0, 60, 'Paywall / основной экран')
-  nodes.push(...main)
-
-  const loading = await buildStateScreen(430, 60, 'Paywall / загрузка тарифов', 'loading')
-  nodes.push(...loading)
-
-  const error = await buildStateScreen(860, 60, 'Paywall / ошибка загрузки', 'error')
-  nodes.push(...error)
-
-  const success = await buildStateScreen(1290, 60, 'Paywall / успешная покупка', 'success')
-  nodes.push(...success)
-
-  nodes.push(buildTokensSection(0, 950))
-
-  const cover = text('Чудо-Остров · Paywall · 390 × 844 · Nunito', {
-    size: 16,
-    font: extraBold,
-    color: C.ink,
-    name: 'cover-title',
-  })
-  cover.x = 0
-  cover.y = 16
-  nodes.push(cover)
-
-  for (const node of nodes) {
-    page.appendChild(node)
-    if (node.setPluginData) node.setPluginData(MARKER_KEY, MARKER_VALUE)
+  let removed = 0
+  try {
+    removed = await removePreviousRun(page)
+  } catch (error) {
+    failures.push(`cleanup: ${error.message}`)
   }
 
-  figma.viewport.scrollAndZoomIntoView(
-    nodes.filter(node => node.type !== 'TEXT' || node.name !== 'cover-title'),
-  )
+  let family = 'fallback'
+  try {
+    family = await loadFonts()
+  } catch (error) {
+    failures.push(`fonts: ${error.message}`)
+  }
 
-  const suffix = removed ? ` (удалён предыдущий прогон: ${removed})` : ''
-  figma.notify(`Готово: экран собран, шрифт ${family}${suffix}`)
+  const nodes = []
+  const builders = [
+    ['основной экран', () => buildMainScreen(0, 60, 'Paywall / основной экран')],
+    ['загрузка', () => buildStateScreen(430, 60, 'Paywall / загрузка тарифов', 'loading')],
+    ['ошибка', () => buildStateScreen(860, 60, 'Paywall / ошибка загрузки', 'error')],
+    ['успех', () => buildStateScreen(1290, 60, 'Paywall / успешная покупка', 'success')],
+  ]
+
+  // One broken screen must not stop the others from being drawn.
+  for (const [label, build] of builders) {
+    try {
+      const built = await build()
+      nodes.push(...built)
+    } catch (error) {
+      failures.push(`${label}: ${error.message}`)
+      console.error(`[paywall] ${label} failed:`, error)
+    }
+  }
+
+  try {
+    nodes.push(buildTokensSection(0, 950))
+  } catch (error) {
+    failures.push(`токены: ${error.message}`)
+  }
+
+  try {
+    const cover = text('Чудо-Остров · Paywall · 390 × 844 · Nunito', {
+      size: 16,
+      font: extraBold,
+      color: C.ink,
+      name: 'cover-title',
+    })
+    cover.x = 0
+    cover.y = 16
+    nodes.push(cover)
+  } catch (error) {
+    failures.push(`заголовок: ${error.message}`)
+  }
+
+  for (const node of nodes) {
+    try {
+      page.appendChild(node)
+      if (node.setPluginData) node.setPluginData(MARKER_KEY, MARKER_VALUE)
+    } catch (error) {
+      failures.push(`appendChild: ${error.message}`)
+    }
+  }
+
+  try {
+    figma.viewport.scrollAndZoomIntoView(
+      nodes.filter(node => node.type !== 'TEXT' || node.name !== 'cover-title'),
+    )
+  } catch {
+    /* zooming is cosmetic */
+  }
+
+  // Диагностика прямо на канвасе: если что-то недоступно в вашей версии
+  // Figma, это будет видно в файле, а не только в консоли.
+  try {
+    const api = [
+      `figma.apiVersion = ${typeof figma.apiVersion === 'string' ? figma.apiVersion : 'недоступно'}`,
+      `page.findAll = ${typeof page.findAll}`,
+      `node.setPluginData = ${typeof (nodes[0] && nodes[0].setPluginData)}`,
+      `figma.listAvailableFontsAsync = ${typeof figma.listAvailableFontsAsync}`,
+      `figma.getAvailableFonts = ${typeof figma.getAvailableFonts}`,
+      `documentAccess = dynamic-page`,
+      `экранов собрано = ${nodes.filter(n => /^Paywall \/ 390x844/.test(n.name)).length} из 4`,
+      `слоёв = ${nodes.length}`,
+      `ошибок = ${failures.length}`,
+    ].join('\n')
+
+    const diag = col('Диагностика плагина', {
+      width: 420,
+      gap: 6,
+      padding: 16,
+      radius: R.md,
+      fills: solid(C.surfaceSoft),
+      stroke: { color: C.line },
+    })
+    diag.appendChild(text('Диагностика плагина', { size: 14, font: extraBold }))
+    diag.appendChild(
+      text(api, {
+        size: 11,
+        font: regular,
+        color: C.inkSoft,
+        lineHeight: 16,
+        width: 388,
+        name: 'api-info',
+      }),
+    )
+    if (failures.length) {
+      diag.appendChild(
+        text(`Ошибки:\n${failures.join('\n')}`, {
+          size: 11,
+          font: regular,
+          color: C.danger,
+          lineHeight: 16,
+          width: 388,
+          name: 'error-info',
+        }),
+      )
+    }
+    diag.x = 0
+    diag.y = 1250
+    page.appendChild(diag)
+    if (diag.setPluginData) diag.setPluginData(MARKER_KEY, MARKER_VALUE)
+  } catch (error) {
+    console.error('[paywall] diagnostics failed:', error)
+  }
+
+  const screens = nodes.filter(node => /^Paywall \/ 390x844/.test(node.name)).length
+  if (failures.length) {
+    figma.notify(`Собрано экранов: ${screens}/4. Ошибки: ${failures.join('; ')}`, {
+      error: true,
+      timeout: 12,
+    })
+    console.error('[paywall] failures:', failures)
+  } else {
+    const suffix = removed ? ` (заменён прошлый прогон: ${removed})` : ''
+    figma.notify(`Готово: ${screens} экрана, шрифт ${family}${suffix}`, { timeout: 6 })
+  }
   figma.closePlugin()
 }
 
