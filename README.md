@@ -3,7 +3,14 @@
 Экран paywall для условной детской игры: два тарифа, выбор, тестовая покупка,
 сохранение в БД и понятные состояния загрузки / ошибки / успеха.
 
-**Репозиторий:** https://github.com/kirillzhakin/kids-paywall
+## Ссылки для сдачи
+
+| Что | Где |
+| --- | --- |
+| **Макет в Figma** | https://www.figma.com/design/TPUBCT5Hwmr8mGZKwbShKT/Чудо-Остров |
+| **Живой сервис** | https://kids-paywall-one.vercel.app |
+| **Репозиторий** | https://github.com/kirillzhakin/kids-paywall |
+| Визуальная спека | [`docs/VISUAL-SPEC.md`](./docs/VISUAL-SPEC.md) · [`docs/DESIGN.md`](./docs/DESIGN.md) |
 
 **Стек:** Nuxt 4 (SSR) + TypeScript · frontend и backend в одном проекте ·
 SQLite локально / Postgres (Neon) в продакшене · деплой на Vercel.
@@ -138,8 +145,11 @@ curl -s "https://<домен>/api/purchases?deviceId=dev_check_001"
 * Эталонный фрейм — **390 × 844**, mobile-first, проверено на 360 / 375 / 390 / 430.
 * `design/screenshots/metrics.json` — точные координаты и размеры блоков,
   `docs/DESIGN.md` — таблица отступов, типографики и цветов.
-* Макет в Figma собирается плагином из `design/figma-plugin/` (инструкция в
-  `design/README.md`): он переносит в файл ту же геометрию и токены, что и вёрстка.
+* Макет в Figma: [`design/svg/00-overview.svg`](./design/svg/00-overview.svg) —
+  все четыре экрана одним листом. Figma импортирует SVG перетаскиванием, без
+  плагина, и текст остаётся редактируемым (`pnpm svg` пересобирает файлы).
+* Там же лежит плагин `design/figma-plugin/` — он собирает экраны с auto-layout
+  внутри Figma; инструкция в [`design/README.md`](./design/README.md).
 
 ## AI-инструменты и что проверено руками
 

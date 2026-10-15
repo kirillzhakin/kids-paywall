@@ -123,6 +123,7 @@ pnpm svg        # пересобрать SVG из server/data/offers.ts
 | Файл | Содержимое |
 | --- | --- |
 | `design/svg/00-overview.svg` | **все четыре экрана одним листом** (1760 × 950) |
+| `design/svg/*.pdf` | те же экраны в PDF — запасной формат, если SVG не устроит |
 | `design/svg/01-main.svg` | основной экран, 390 × 844 |
 | `design/svg/02-loading.svg` | загрузка тарифов |
 | `design/svg/03-error.svg` | ошибка загрузки |
