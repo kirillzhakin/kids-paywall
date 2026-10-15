@@ -92,6 +92,12 @@ const circle = (cx, cy, r, { fill, opacity } = {}) => {
   return `  <circle ${attrs.join(' ')} />`
 }
 
+
+/* ------------------------------------------------------------------ */
+/* vector icons — emoji would need a separate colour font, which makes */
+/* Figma's first paint noticeably slower                              */
+/* ------------------------------------------------------------------ */
+
 /* ------------------------------------------------------------------ */
 
 async function loadOffers() {
