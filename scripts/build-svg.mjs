@@ -69,8 +69,9 @@ function text(x, y, value, { size, weight = 700, fill = C.ink, anchor = 'start',
   return `  <text ${attrs.join(' ')}>${esc(value)}</text>`
 }
 
-const rect = (x, y, w, h, { fill, rx = 0, stroke, strokeWidth = 1, opacity } = {}) => {
+const rect = (x, y, w, h, { fill, rx = 0, stroke, strokeWidth = 1, opacity, id } = {}) => {
   const attrs = [`x="${x}"`, `y="${y}"`, `width="${w}"`, `height="${h}"`]
+  if (id) attrs.push(`id="${id}"`)
   if (rx) attrs.push(`rx="${rx}"`)
   attrs.push(`fill="${fill || 'none'}"`)
   if (stroke) {
@@ -181,7 +182,7 @@ function buildScreenParts({ offers, title, variant = 'main' }) {
       'Игра без интернета',
     ]
     const boxH = 26 + unlocks.length * 26
-    parts.push(rect(PAD, y, CONTENT, boxH, { fill: C.surface, rx: 16, stroke: C.line }))
+    parts.push(rect(PAD, y, CONTENT, boxH, { fill: C.surface, rx: 16, stroke: C.line, id: 'unlocks-card' }))
     unlocks.forEach((item, index) => {
       const itemY = y + 16 + index * 26
       parts.push(circle(PAD + 24, itemY + 6, 10.5, { fill: C.greenSoft }))
@@ -208,7 +209,7 @@ function buildScreenParts({ offers, title, variant = 'main' }) {
       y += cardH + 10
     }
   } else if (variant === 'error') {
-    parts.push(rect(PAD, y, CONTENT, 62, { fill: C.dangerSoft, rx: 16, stroke: 'rgba(224,65,63,0.25)' }))
+    parts.push(rect(PAD, y, CONTENT, 62, { fill: C.dangerSoft, rx: 16, stroke: 'rgba(224,65,63,0.25)', id: 'error-banner' }))
     parts.push(circle(PAD + 26, y + 31, 14, { fill: C.surface }))
     parts.push(text(PAD + 26, y + 36, '!', { size: 14, weight: 900, fill: C.danger, anchor: 'middle' }))
     parts.push(text(PAD + 48, y + 24, 'Что-то пошло не так', { size: 12.5, weight: 800, fill: '#9C2422' }))
@@ -226,7 +227,7 @@ function buildScreenParts({ offers, title, variant = 'main' }) {
     parts.push(text(W / 2, artY + 197, 'разблокированы. Приятной игры!', { size: 13.5, weight: 600, fill: C.inkSoft, anchor: 'middle' }))
 
     const buttonY = artY + 216
-    parts.push(rect(PAD, buttonY, CONTENT, 52, { fill: C.brand, rx: 26 }))
+    parts.push(rect(PAD, buttonY, CONTENT, 52, { fill: C.brand, rx: 26, id: 'success-button' }))
     parts.push(text(W / 2, buttonY + 32, 'Продолжить игру', { size: 15.5, weight: 900, fill: '#FFFFFF', anchor: 'middle' }))
 
     const receiptY = buttonY + 68
@@ -237,7 +238,7 @@ function buildScreenParts({ offers, title, variant = 'main' }) {
       ['Номер покупки', 'pur_mv8a1xj6m5pa8y'],
     ]
     const receiptH = 24 + rows.length * 24
-    parts.push(rect(PAD, receiptY, CONTENT, receiptH, { fill: C.surfaceSoft, rx: 16, stroke: C.line }))
+    parts.push(rect(PAD, receiptY, CONTENT, receiptH, { fill: C.surfaceSoft, rx: 16, stroke: C.line, id: 'receipt' }))
     rows.forEach(([key, value], index) => {
       const rowY = receiptY + 26 + index * 24
       parts.push(text(PAD + 14, rowY, key, { size: 11.5, weight: 700, fill: C.muted }))
@@ -258,6 +259,7 @@ function buildScreenParts({ offers, title, variant = 'main' }) {
           rx: 22,
           stroke: offer.active ? C.brand : C.line,
           strokeWidth: offer.active ? 1.5 : 1.5,
+          id: offer.active ? 'offer-yearly' : 'offer-monthly',
         }),
       )
 
@@ -298,9 +300,9 @@ function buildScreenParts({ offers, title, variant = 'main' }) {
   const barH = 155
   const barY = H - barH
   parts.push(`  <!-- CTA bar -->`)
-  parts.push(rect(0, barY, W, barH, { fill: C.surface, opacity: 0.97 }))
+  parts.push(rect(0, barY, W, barH, { fill: C.surface, opacity: 0.97, id: 'cta-bar' }))
   parts.push(rect(0, barY, W, 1, { fill: C.line }))
-  parts.push(rect(PAD, barY + 13, CONTENT, 54, { fill: C.brand, rx: 27 }))
+  parts.push(rect(PAD, barY + 13, CONTENT, 54, { fill: C.brand, rx: 27, id: 'cta-button' }))
   const ctaLabel = variant === 'purchasing' ? 'Оформляем…' : `Открыть за ${offers[0].amount}`
   // The CTA mixes two type sizes, so centre the pair manually instead of
   // anchoring both halves on the same point (that overlapped them).

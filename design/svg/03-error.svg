@@ -37,7 +37,7 @@
   <text x="20" y="198" font-family="Roboto" font-size="14" font-weight="600" fill="#4A4560">Полный доступ открывает все острова,</text>
   <text x="20" y="218" font-family="Roboto" font-size="14" font-weight="600" fill="#4A4560">боссов и ежедневные задания.</text>
   <!-- unlocks -->
-  <rect x="20" y="234" width="350" height="130" rx="16" fill="#FFFFFF" stroke="#E9E5F5" stroke-width="1" />
+  <rect x="20" y="234" width="350" height="130" id="unlocks-card" rx="16" fill="#FFFFFF" stroke="#E9E5F5" stroke-width="1" />
   <circle cx="44" cy="256" r="10.5" fill="#E4F9EF" />
   <path d="M 40.76 257.05 L 43.4 259.69 L 48.35 253.2" fill="none" stroke="#0B8F5B" stroke-width="1.83" stroke-linecap="round" stroke-linejoin="round" />
   <text x="62" y="260" font-family="Roboto" font-size="13" font-weight="700" fill="#4A4560">Все 120 уровней и 6 островов</text>
@@ -52,7 +52,7 @@
   <text x="62" y="338" font-family="Roboto" font-size="13" font-weight="700" fill="#4A4560">Игра без интернета</text>
   <text x="20" y="398" font-family="Roboto" font-size="17" font-weight="900" fill="#1E1A2E">Выберите тариф</text>
   <text x="370" y="398" font-family="Roboto" font-size="11" font-weight="600" fill="#8B86A3" text-anchor="end">Отмена в любой момент</text>
-  <rect x="20" y="408" width="350" height="62" rx="16" fill="#FDECEB" stroke="rgba(224,65,63,0.25)" stroke-width="1" />
+  <rect x="20" y="408" width="350" height="62" id="error-banner" rx="16" fill="#FDECEB" stroke="rgba(224,65,63,0.25)" stroke-width="1" />
   <circle cx="46" cy="439" r="14" fill="#FFFFFF" />
   <text x="46" y="444" font-family="Roboto" font-size="14" font-weight="900" fill="#E0413F" text-anchor="middle">!</text>
   <text x="68" y="432" font-family="Roboto" font-size="12.5" font-weight="800" fill="#9C2422">Что-то пошло не так</text>
@@ -62,9 +62,9 @@
   </g>
   <g>
   <!-- CTA bar -->
-  <rect x="0" y="689" width="390" height="155" fill="#FFFFFF" opacity="0.97" />
+  <rect x="0" y="689" width="390" height="155" id="cta-bar" fill="#FFFFFF" opacity="0.97" />
   <rect x="0" y="689" width="390" height="1" fill="#E9E5F5" />
-  <rect x="20" y="702" width="350" height="54" rx="27" fill="#6A45FF" />
+  <rect x="20" y="702" width="350" height="54" id="cta-button" rx="27" fill="#6A45FF" />
   <text x="46.60000000000002" y="734" font-family="Roboto" font-size="16" font-weight="900" fill="#FFFFFF">Открыть за 1 790 ₽</text>
   <text x="219.4" y="733" font-family="Roboto" font-size="12" font-weight="700" fill="#FFFFFF" opacity="0.82">Полный доступ на год</text>
   <text x="107" y="778" font-family="Roboto" font-size="12.5" font-weight="700" fill="#4A27D6" text-anchor="middle">Восстановить покупки</text>
