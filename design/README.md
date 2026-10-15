@@ -109,3 +109,29 @@ design/figma-plugin/diag/manifest.json
 curl -s -H "X-Figma-Token: $FIGMA_TOKEN" \
   "https://api.figma.com/v1/files/<fileKey>?depth=6" | grep DIAG
 ```
+
+## Способ без плагина: импорт SVG
+
+Если Plugin API в вашей сборке Figma ведёт себя непредсказуемо, макет можно
+получить вообще без плагина — Figma импортирует SVG через **Import** или
+перетаскиванием, а текст внутри SVG остаётся редактируемым.
+
+```bash
+pnpm svg        # пересобрать SVG из server/data/offers.ts
+```
+
+| Файл | Содержимое |
+| --- | --- |
+| `design/svg/00-overview.svg` | **все четыре экрана одним листом** (1760 × 950) |
+| `design/svg/01-main.svg` | основной экран, 390 × 844 |
+| `design/svg/02-loading.svg` | загрузка тарифов |
+| `design/svg/03-error.svg` | ошибка загрузки |
+| `design/svg/04-success.svg` | успешная покупка |
+
+Порядок: в Figma перетащите `00-overview.svg` на страницу (или
+**File → Place image** / **Import**). Появится один фрейм со всеми экранами;
+текст останется текстом, векторные элементы — векторами.
+
+Цены в SVG не дублируются вручную: генератор читает
+`YEARLY_PRICE_MINOR` / `MONTHLY_PRICE_MINOR` из `server/data/offers.ts`,
+поэтому макет и приложение не могут разойтись.

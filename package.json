@@ -17,7 +17,9 @@
     "test:figma": "node design/figma-plugin/test-plugin.mjs",
     "shots": "node scripts/screenshots.mjs",
     "db:recent": "sqlite3 .data/paywall.sqlite \"select created_at, device_id, offer_id, amount_minor, id from purchases order by created_at desc limit 10;\"",
-    "db:count": "sqlite3 .data/paywall.sqlite \"select count(*) as purchases from purchases;\""
+    "db:count": "sqlite3 .data/paywall.sqlite \"select count(*) as purchases from purchases;\"",
+    "svg": "node scripts/build-svg.mjs",
+    "svg:png": "node scripts/build-svg.mjs"
   },
   "dependencies": {
     "@fontsource-variable/nunito": "^5.2.8",
