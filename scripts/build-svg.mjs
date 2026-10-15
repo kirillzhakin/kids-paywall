@@ -36,7 +36,13 @@ const C = {
   gradientTop: '#EFE7FF',
 }
 
-const FONT = 'Nunito, Roboto, Inter, Arial, sans-serif'
+/*
+ * A single font name on purpose: the SVG importer in Figma does not resolve a
+ * comma-separated font stack and silently drops every <text> element, which is
+ * exactly what happened on the first import. Roboto is always available in
+ * Figma, including Cyrillic.
+ */
+const FONT = process.env.SVG_FONT || 'Roboto'
 const W = 390
 const H = 844
 const PAD = 20
