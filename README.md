@@ -7,7 +7,7 @@
 
 | Что | Где |
 | --- | --- |
-| **Макет в Figma** | https://www.figma.com/design/TPUBCT5Hwmr8mGZKwbShKT/Чудо-Остров |
+| **Макет в Figma** | https://www.figma.com/design/TPUBCT5Hwmr8mGZKwbShKT/%D0%A7%D1%83%D0%B4%D0%BE-%D0%9E%D1%81%D1%82%D1%80%D0%BE%D0%B2 |
 | **Живой сервис** | https://kids-paywall-one.vercel.app |
 | **Репозиторий** | https://github.com/kirillzhakin/kids-paywall |
 | Визуальная спека | [`docs/VISUAL-SPEC.md`](./docs/VISUAL-SPEC.md) · [`docs/DESIGN.md`](./docs/DESIGN.md) |
