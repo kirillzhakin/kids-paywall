@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" fill="none">
+  <title>Paywall / 390x844 — основной</title>
+  <defs>
+    <style>
+      @font-face { font-family: 'Roboto'; font-display: block; src: local('Roboto'); }
+      text { font-family: 'Roboto', sans-serif; }
+    </style>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F7F4FF" />
+      <stop offset="0.42" stop-color="#FDFBFF" />
+      <stop offset="1" stop-color="#FFFFFF" />
+    </linearGradient>
+    <radialGradient id="wash" cx="0.5" cy="0" r="0.62">
+      <stop offset="0" stop-color="#EFE7FF" stop-opacity="0.95" />
+      <stop offset="1" stop-color="#EFE7FF" stop-opacity="0" />
+    </radialGradient>
+    <!-- the implementation scrolls its body under a fixed CTA bar; clip the
+         mock the same way so content cannot bleed over the button -->
+    <clipPath id="scrollArea">
+      <rect x="0" y="0" width="390" height="689" />
+    </clipPath>
+  </defs>
+  <rect x="0" y="0" width="390" height="844" fill="url(#bg)" />
+  <rect x="0" y="0" width="390" height="360" fill="url(#wash)" />
+  <g clip-path="url(#scrollArea)">
+  <!-- status bar -->
+  <text x="28" y="32" font-family="Roboto" font-size="14" font-weight="700" fill="#1E1A2E">9:41</text>
+  <rect x="294" y="22" width="52" height="14" rx="4" fill="#1E1A2E" opacity="0.85" />
+  <!-- top bar -->
+  <circle cx="38" cy="68" r="17" fill="#FFFFFF" opacity="0.72" />
+  <path d="M32 62 l12 12 M44 62 l-12 12" stroke="#4A4560" stroke-width="1.8" stroke-linecap="round" fill="none" />
+  <text x="195" y="73" font-family="Roboto" font-size="13.5" font-weight="800" fill="#4A4560" text-anchor="middle">🏝️ Чудо-Остров</text>
+  <circle cx="352" cy="68" r="17" fill="#FFFFFF" opacity="0.72" />
+  <!-- hero -->
+  <rect x="20" y="98" width="236" height="38" rx="19" fill="#FFFFFF" stroke="#E9E5F5" stroke-width="1" />
+  <circle cx="41" cy="117" r="13" fill="#EFEAFF" />
+  <text x="41" y="121" font-family="Roboto" font-size="13" font-weight="700" fill="#1E1A2E" text-anchor="middle">🚀</text>
+  <text x="62" y="115" font-family="Roboto" font-size="12" font-weight="800" fill="#1E1A2E">Уровень 3 из 120</text>
+  <text x="62" y="129" font-family="Roboto" font-size="10.5" font-weight="600" fill="#8B86A3">Пробные уровни закончились</text>
+  <text x="20" y="166" font-family="Roboto" font-size="27" font-weight="900" fill="#1E1A2E">Открой все 120 уровней</text>
+  <text x="20" y="198" font-family="Roboto" font-size="14" font-weight="600" fill="#4A4560">Полный доступ открывает все острова,</text>
+  <text x="20" y="218" font-family="Roboto" font-size="14" font-weight="600" fill="#4A4560">боссов и ежедневные задания.</text>
+  <!-- unlocks -->
+  <rect x="20" y="234" width="350" height="130" id="unlocks-card" rx="16" fill="#FFFFFF" stroke="#E9E5F5" stroke-width="1" />
+  <circle cx="44" cy="256" r="10.5" fill="#E4F9EF" />
+  <path d="M 40.76 257.05 L 43.4 259.69 L 48.35 253.2" fill="none" stroke="#0B8F5B" stroke-width="1.83" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="62" y="260" font-family="Roboto" font-size="13" font-weight="700" fill="#4A4560">Все 120 уровней и 6 островов</text>
+  <circle cx="44" cy="282" r="10.5" fill="#E4F9EF" />
+  <path d="M 40.76 283.05 L 43.4 285.69 L 48.35 279.2" fill="none" stroke="#0B8F5B" stroke-width="1.83" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="62" y="286" font-family="Roboto" font-size="13" font-weight="700" fill="#4A4560">Без рекламы и ожидания энергии</text>
+  <circle cx="44" cy="308" r="10.5" fill="#E4F9EF" />
+  <path d="M 40.76 309.05 L 43.4 311.69 L 48.35 305.2" fill="none" stroke="#0B8F5B" stroke-width="1.83" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="62" y="312" font-family="Roboto" font-size="13" font-weight="700" fill="#4A4560">Ежедневные задания и боссы</text>
+  <circle cx="44" cy="334" r="10.5" fill="#E4F9EF" />
+  <path d="M 40.76 335.05 L 43.4 337.69 L 48.35 331.2" fill="none" stroke="#0B8F5B" stroke-width="1.83" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="62" y="338" font-family="Roboto" font-size="13" font-weight="700" fill="#4A4560">Игра без интернета</text>
+  <text x="20" y="398" font-family="Roboto" font-size="17" font-weight="900" fill="#1E1A2E">Выберите тариф</text>
+  <text x="370" y="398" font-family="Roboto" font-size="11" font-weight="600" fill="#8B86A3" text-anchor="end">Отмена в любой момент</text>
+  <!-- offer: Год -->
+  <rect x="20" y="408" width="350" height="154" id="offer-yearly" rx="22" fill="#FFFFFF" stroke="#6A45FF" stroke-width="1.5" />
+  <rect x="239" y="399" width="118" height="20" rx="10" fill="#14C07B" />
+  <text x="298" y="413" font-family="Roboto" font-size="10.5" font-weight="800" fill="#FFFFFF" text-anchor="middle">Выгодно −63%</text>
+  <circle cx="46" cy="435" r="11" fill="#6A45FF" />
+  <path d="M 42.76 436.05 L 45.4 438.69 L 50.35 432.2" fill="none" stroke="#FFFFFF" stroke-width="1.83" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="66" y="440" font-family="Roboto" font-size="15.5" font-weight="900" fill="#1E1A2E">Год</text>
+  <text x="354" y="438" font-family="Roboto" font-size="19" font-weight="900" fill="#1E1A2E" text-anchor="end">1 790 ₽</text>
+  <text x="354" y="454" font-family="Roboto" font-size="11" font-weight="700" fill="#8B86A3" text-anchor="end">раз в год</text>
+  <text x="354" y="470" font-family="Roboto" font-size="11" font-weight="700" fill="#8B86A3" text-anchor="end">4 788 ₽</text>
+  <text x="36" y="492" font-family="Roboto" font-size="11.5" font-weight="600" fill="#8B86A3">Оплата раз в год, списаний больше не будет</text>
+  <rect x="36" y="504" width="318" height="1" fill="#E9E5F5" />
+  <path d="M 37.6 518.5 L 40 520.9 L 44.5 515" fill="none" stroke="#14C07B" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="52" y="522" font-family="Roboto" font-size="11.5" font-weight="700" fill="#4A4560">2 месяца в подарок</text>
+  <path d="M 37.6 535.5 L 40 537.9 L 44.5 532" fill="none" stroke="#14C07B" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="52" y="539" font-family="Roboto" font-size="11.5" font-weight="700" fill="#4A4560">Цена не изменится весь год</text>
+  <!-- offer: Месяц -->
+  <rect x="20" y="572" width="350" height="137" id="offer-monthly" rx="22" fill="#FFFFFF" stroke="#E9E5F5" stroke-width="1.5" />
+  <circle cx="46" cy="599" r="11" fill="#FFFFFF" />
+  <circle cx="46" cy="599" r="10" fill="none" />
+  <circle cx="46" cy="599" r="10" fill="none" stroke="#DED4FF" stroke-width="2" />
+  <text x="66" y="604" font-family="Roboto" font-size="15.5" font-weight="900" fill="#1E1A2E">Месяц</text>
+  <text x="354" y="602" font-family="Roboto" font-size="19" font-weight="900" fill="#1E1A2E" text-anchor="end">399 ₽</text>
+  <text x="354" y="618" font-family="Roboto" font-size="11" font-weight="700" fill="#8B86A3" text-anchor="end">каждый месяц</text>
+  <text x="36" y="648" font-family="Roboto" font-size="11.5" font-weight="600" fill="#8B86A3">Оплата каждый месяц, отмена в один тап</text>
+  <rect x="36" y="651" width="318" height="1" fill="#E9E5F5" />
+  <path d="M 37.6 665.5 L 40 667.9 L 44.5 662" fill="none" stroke="#14C07B" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="52" y="669" font-family="Roboto" font-size="11.5" font-weight="700" fill="#4A4560">Отмена в любой момент</text>
+  <path d="M 37.6 682.5 L 40 684.9 L 44.5 679" fill="none" stroke="#14C07B" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="52" y="686" font-family="Roboto" font-size="11.5" font-weight="700" fill="#4A4560">Сначала попробуйте месяц</text>
+  </g>
+  <g>
+  <!-- CTA bar -->
+  <rect x="0" y="689" width="390" height="155" id="cta-bar" fill="#FFFFFF" opacity="0.97" />
+  <rect x="0" y="689" width="390" height="1" fill="#E9E5F5" />
+  <rect x="20" y="702" width="350" height="54" id="cta-button" rx="27" fill="#6A45FF" />
+  <text x="46.60000000000002" y="734" font-family="Roboto" font-size="16" font-weight="900" fill="#FFFFFF">Открыть за 1 790 ₽</text>
+  <text x="219.4" y="733" font-family="Roboto" font-size="12" font-weight="700" fill="#FFFFFF" opacity="0.82">Полный доступ на год</text>
+  <text x="107" y="778" font-family="Roboto" font-size="12.5" font-weight="700" fill="#4A27D6" text-anchor="middle">Восстановить покупки</text>
+  <text x="195" y="777" font-family="Roboto" font-size="15" font-weight="700" fill="#8B86A3" text-anchor="middle">•</text>
+  <text x="279" y="778" font-family="Roboto" font-size="12.5" font-weight="700" fill="#4A27D6" text-anchor="middle">Мои покупки</text>
+  <text x="195" y="801" font-family="Roboto" font-size="10" font-weight="600" fill="#8B86A3" text-anchor="middle">Тестовая покупка без списания денег.</text>
+  <text x="195" y="815" font-family="Roboto" font-size="10" font-weight="600" fill="#8B86A3" text-anchor="middle">Подписку можно отменить в настройках.</text>
+  </g>
+</svg>
