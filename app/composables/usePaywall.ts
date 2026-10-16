@@ -89,7 +89,8 @@ export function usePaywall() {
     }
   })
 
-  function showToast(text: string, tone: 'ok' | 'error' = 'ok') {    toast.value = { text, tone }
+  function showToast(text: string, tone: 'ok' | 'error' = 'ok') {
+    toast.value = { text, tone }
     if (import.meta.client) {
       window.setTimeout(() => {
         if (toast.value?.text === text) toast.value = null
